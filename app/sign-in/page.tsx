@@ -4,10 +4,8 @@ export default function Home() {
   return (
     // Background utama: Menggunakan Slate-900 agar lebih deep dan modern
     <div className="flex items-center justify-center min-h-screen bg-slate-900 px-4">
-      
       {/* Card Form: Efek border halus dan backdrop blur sering digunakan di UI modern */}
       <main className="flex flex-col items-center gap-8 w-full max-w-md p-10 bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl">
-        
         {/* Logo Section */}
         <div className="flex flex-col items-center gap-2">
           <div className="p-3 bg-slate-700 rounded-full shadow-inner">
@@ -20,15 +18,12 @@ export default function Home() {
               priority
             />
           </div>
-          <h1 className="text-3xl font-extrabold text-white tracking-tight mt-4">
-            Welcome Back
-          </h1>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight mt-4">Welcome Back</h1>
           <p className="text-slate-400 text-sm">Please enter your details</p>
         </div>
 
         {/* Form Section */}
         <form className="flex flex-col gap-5 w-full">
-          
           {/* Input Group: Email */}
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-medium text-slate-300 ml-1">Email Address</label>
@@ -45,7 +40,9 @@ export default function Home() {
           <div className="flex flex-col gap-1.5">
             <div className="flex justify-between items-center px-1">
               <label className="text-sm font-medium text-slate-300">Password</label>
-              <a href="#" className="text-xs text-blue-400 hover:text-blue-300 transition">Forgot?</a>
+              <a href="#" className="text-xs text-blue-400 hover:text-blue-300 transition">
+                Forgot?
+              </a>
             </div>
             <input
               type="password"
@@ -69,9 +66,10 @@ export default function Home() {
         {/* Footer Card */}
         <p className="text-slate-400 text-sm">
           Don't have an account?{" "}
-          <a href="#" className="text-blue-400 font-medium hover:underline">Sign up</a>
+          <a href="#" className="text-blue-400 font-medium hover:underline">
+            Sign up
+          </a>
         </p>
-
       </main>
     </div>
   );
