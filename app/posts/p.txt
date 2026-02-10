@@ -1,0 +1,36 @@
+import CardList from "../components/Posts/CardList";
+import ViewUserButton from "../components/Posts/ViewUserButton";
+
+const base_url = "https://jsonplaceholder.typicode.com/posts";
+
+// Tetap pakai arrow function seperti yang kamu mau
+const Page = async () => {
+  const response = await fetch(base_url, {
+    cache: "no-store", // supaya tidak error fetch di Next.js
+  });
+
+  // Cek kalau request gagal
+  if (!response.ok) {
+    throw new Error("Gagal mengambil data posts");
+  }
+
+  const posts = await response.json();
+
+  return (
+    <>
+      <h2 className="bg-amber-400 text-white font-bold">POSTINGAN PAGE</h2>
+
+      {/* contoh tampilkan id post pertama */}
+      <p>{posts[0].id}</p>
+
+      <CardList>
+        <p>Hello</p>
+        <i>Assalamualaikum</i>
+        <ViewUserButton />
+      </CardList>
+    </>
+  );
+};
+
+// Export default tetap di bawah (sesuai gaya awal kamu)
+export default Page;
