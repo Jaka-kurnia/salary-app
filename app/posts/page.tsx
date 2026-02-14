@@ -35,7 +35,7 @@ const Page = async () => {
 
   return (
     <>
-      <h2 className="bg-amber-400 text-white font-bold">
+      <h2 className="bg-amber-400 text-white font-bold h-12 flex items-center justify-center">
         POSTINGAN PAGE
       </h2>
       {/* Judul halaman dengan styling Tailwind */}
