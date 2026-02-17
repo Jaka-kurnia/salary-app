@@ -1,8 +1,10 @@
 import CardList from "../components/Posts/CardList";
 // Mengimpor komponen CardList untuk membungkus tampilan setiap post
 
-import ViewUserButton from "../components/Posts/ViewUserButton";
+// import ViewUserButton from "../components/Posts/ViewUserButton";
 // Mengimpor tombol untuk melihat detail user dari post
+
+import Button from "../components/Elements/Button";
 
 const base_url = "https://jsonplaceholder.typicode.com/posts";
 // URL API yang digunakan untuk mengambil data posts (dummy API JSONPlaceholder)
@@ -53,7 +55,7 @@ const Page = async () => {
             <i>{post.body}</i>
 
             {/* Tombol untuk melihat user dari post */}
-            <ViewUserButton />
+            <Button variant ="bg-blue-500">P</Button>
           </CardList>
         );
       })}
