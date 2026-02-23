@@ -1,15 +1,13 @@
-import React from 'react'
-import SidebarLayout from '../components/Layouts/sidebar'
+import React from "react";
+import SidebarLayout from "../../components/Layouts/sidebar";
+import NavbarLayout from "../../components/Layouts/navbar";
 
 const page = () => {
   return (
     <SidebarLayout>
-      <div className="bg-white p-6 rounded-lg shadow-sm">
-        <h1 className="text-2xl font-bold text-slate-800">Cuti</h1>
-        <p className="text-slate-500">Halaman cuti karyawan.</p>
-      </div>
+      <NavbarLayout />
     </SidebarLayout>
-  )
-}
+  );
+};
 
-export default page
+export default page;
