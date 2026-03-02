@@ -1,7 +1,7 @@
-import { Sidebar } from "lucide-react";
+import SidebarLayout from "@/components/Layouts/sidebar";
+import NavbarLayout from "@/components/Layouts/navbar";
 import React from "react";
-import SidebarLayout from "../../components/Layouts/sidebar";
-import NavbarLayout from "../../components/Layouts/navbar";
+import { Plus } from "lucide-react";
 
 const page = () => {
   return (
