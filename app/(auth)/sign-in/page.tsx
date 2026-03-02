@@ -1,145 +1,145 @@
 "use client";
-// Menandakan bahwa komponen ini adalah Client Component di Next.js (bisa pakai useState, useRouter, dll)
 
 import { useState } from "react";
-// Hook React untuk menyimpan state (email, password, error, loading)
-
 import { useRouter } from "next/navigation";
-// Hook Next.js untuk navigasi/pindah halaman secara programatik
 
 export default function SignIn() {
   const router = useRouter();
-  // Inisialisasi router agar bisa redirect ke halaman lain
-
   const [email, setEmail] = useState("");
-  // State untuk menyimpan input email
-
   const [password, setPassword] = useState("");
-  // State untuk menyimpan input password
-
   const [error, setError] = useState("");
-  // State untuk menyimpan pesan error login
-
   const [loading, setLoading] = useState(false);
-  // State untuk menandakan proses login sedang berjalan
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Mencegah reload halaman saat form disubmit
-
     setError("");
-    // Reset error sebelum mencoba login
-
     setLoading(true);
-    // Aktifkan status loading
 
     try {
       const res = await fetch("/api/login", {
-        method: "POST", // Method POST untuk kirim data login
-        headers: {
-          "Content-Type": "application/json", // Format body JSON
-        },
-        body: JSON.stringify({
-          email, // Kirim email
-          password, // Kirim password
-        }),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
-      // Ambil response JSON dari server
-
-      if (!res.ok) {
-        // Jika status HTTP bukan 2xx → anggap gagal
-        throw new Error(data.message || "Login gagal");
-      }
+      if (!res.ok) throw new Error(data.message || "Login gagal");
 
       localStorage.setItem("access_token", data.token);
-      // Simpan token login ke localStorage
-
       localStorage.setItem("user", JSON.stringify(data.user));
-      // Simpan data user ke localStorage (diubah jadi string)
-
       router.push("/dashboard");
-      // Redirect ke halaman dashboard setelah login sukses
     } catch (err: any) {
       setError(err.message);
-      // Tampilkan pesan error jika login gagal
     } finally {
       setLoading(false);
-      // Matikan loading setelah proses selesai (sukses/gagal)
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-zinc-100 to-zinc-200 dark:from-black dark:to-zinc-900 px-4">
-      {/* Container full screen + background gradient + center alignment */}
-
-      <main className="w-full max-w-md rounded-3xl bg-white/90 backdrop-blur p-8 shadow-xl dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800">
-        {/* Card login */}
-
-        {/* Title */}
-        <div className="mb-6 text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-zinc-800 dark:text-white">Welcome Back</h1>
-          {/* Judul utama */}
-
-          <p className="mt-1 text-sm text-zinc-500">Sign in to continue to dashboard</p>
-          {/* Subtitle */}
+    <div className="flex min-h-screen bg-white dark:bg-zinc-950">
+      {/* --- BAGIAN KIRI: FOTO/VISUAL --- */}
+      <div className="relative hidden w-1/2 lg:block">
+        <img
+          src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop" 
+          alt="Office space"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        {/* Overlay Gradient agar teks terbaca */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        
+        {/* Konten Text di atas Foto */}
+        <div className="absolute bottom-16 left-16 right-16">
+          <h2 className="text-4xl font-bold text-white leading-tight">
+            Elevate your workflow <br /> with our premium dashboard.
+          </h2>
+          <p className="mt-4 text-lg text-zinc-300">
+            Join thousands of professionals managing their tasks seamlessly.
+          </p>
         </div>
+      </div>
 
-        {/* Form Login */}
-        <form onSubmit={handleLogin} className="space-y-4">
-          {/* Field Email */}
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-zinc-600 dark:text-zinc-300">Email</label>
-
-            <input
-              type="email"
-              placeholder="admin@mail.com"
-              value={email}
-              // Nilai input diambil dari state email
-
-              onChange={(e) => setEmail(e.target.value)}
-              // Update state email saat diketik
-
-              className="w-full rounded-xl border border-zinc-300 bg-white px-3 py-2 outline-none transition focus:border-black focus:ring-2 focus:ring-black/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-white"
-              required
-              // Wajib diisi
-            />
+      {/* --- BAGIAN KANAN: FORM LOGIN --- */}
+      <main className="flex w-full items-center justify-center px-8 py-12 lg:w-1/2">
+        <div className="w-full max-w-sm space-y-8">
+          
+          {/* Header */}
+          <div>
+            <div className="mb-8 flex h-10 w-10 items-center justify-center rounded-xl bg-black text-white dark:bg-white dark:text-black">
+              <span className="font-bold">G</span>
+            </div>
+            <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
+              Welcome back
+            </h1>
+            <p className="mt-2 text-zinc-500 dark:text-zinc-400">
+              Please enter your details to sign in.
+            </p>
           </div>
 
-          {/* Field Password */}
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-zinc-600 dark:text-zinc-300">Password</label>
+          {/* Form */}
+          <form onSubmit={handleLogin} className="space-y-5">
+            <div className="space-y-2">
+              <label className="text-sm font-medium leading-none text-zinc-700 dark:text-zinc-300">
+                Email Address
+              </label>
+              <input
+                type="email"
+                placeholder="name@company.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="flex h-11 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-800 dark:bg-zinc-900 dark:ring-offset-zinc-950 dark:focus-visible:ring-white"
+                required
+              />
+            </div>
 
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              // Nilai password dari state
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium leading-none text-zinc-700 dark:text-zinc-300">
+                  Password
+                </label>
+                <a href="#" className="text-sm font-medium text-zinc-900 hover:underline dark:text-zinc-400">
+                  Forgot password?
+                </a>
+              </div>
+              <input
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="flex h-11 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm ring-offset-white placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-900 dark:ring-offset-zinc-950 dark:focus-visible:ring-white"
+                required
+              />
+            </div>
 
-              onChange={(e) => setPassword(e.target.value)}
-              // Update state password saat diketik
+            {/* Error Message */}
+            {error && (
+              <div className="flex items-center gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400 border border-red-100 dark:border-red-900/30">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                {error}
+              </div>
+            )}
 
-              className="w-full rounded-xl border border-zinc-300 bg-white px-3 py-2 outline-none transition focus:border-black focus:ring-2 focus:ring-black/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-white"
-              required
-            />
-          </div>
+            <button
+              disabled={loading}
+              className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+            >
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-zinc-400 border-t-white" />
+                  Logging in...
+                </div>
+              ) : (
+                "Sign In"
+              )}
+            </button>
+          </form>
 
-          {/* Pesan Error */}
-          {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600 border border-red-200">{error}</p>}
-          {/* Hanya tampil jika ada error */}
-
-          {/* Tombol Login */}
-          <button
-            disabled={loading}
-            // Nonaktif saat loading
-
-            className="w-full rounded-xl bg-black py-2.5 text-white font-medium transition hover:bg-zinc-800 active:scale-[0.98] disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
-          >
-            {loading ? "Logging in..." : "Login"}
-            {/* Teks berubah saat loading */}
-          </button>
-        </form>
+          <footer className="text-center text-sm text-zinc-500">
+            Don&apos;t have an account?{" "}
+            <a href="#" className="font-semibold text-zinc-900 hover:underline dark:text-white">
+              Create an account
+            </a>
+          </footer>
+        </div>
       </main>
     </div>
   );
