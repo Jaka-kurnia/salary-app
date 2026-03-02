@@ -8,6 +8,3 @@ export default function Home() {
   redirect("/posts")
 }
 
-// export default function Tes(){
-//   redirect
-// }
