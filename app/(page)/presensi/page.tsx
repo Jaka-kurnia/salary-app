@@ -1,6 +1,6 @@
 import React from "react";
-import SidebarLayout from "../../components/Layouts/sidebar";
-import NavbarLayout from "../../components/Layouts/navbar";
+import NavbarLayout from "@/components/Layouts/navbar";
+import SidebarLayout from "@/components/Layouts/sidebar";
 
 const page = () => {
   return (
