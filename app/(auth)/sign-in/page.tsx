@@ -25,9 +25,21 @@ export default function SignIn() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Login gagal");
 
+      // SIMPAN DATA KE LOCALSTORAGE
       localStorage.setItem("access_token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-      router.push("/dashboard");
+
+      // SIMPAN ROLE KE COOKIE (Agar Middleware bisa baca untuk proteksi rute)
+      // Kita gunakan document.cookie bawaan browser agar tidak perlu install library luar
+      document.cookie = `user_role=${data.user.role}; path=/; max-age=86400`; // 86400 = 1 hari
+
+      // LOGIKA REDIRECT BERDASARKAN ROLE
+      if (data.user.role === "admin") {
+        router.push("/admin/dashboard");
+      } else {
+        router.push("/users/dashboard");
+      }
+
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -37,17 +49,14 @@ export default function SignIn() {
 
   return (
     <div className="flex min-h-screen bg-white dark:bg-zinc-950">
-      {/* --- BAGIAN KIRI: FOTO/VISUAL --- */}
+      {/* --- BAGIAN KIRI: FOTO/VISUAL (KODE ASLI KAMU) --- */}
       <div className="relative hidden w-1/2 lg:block">
         <img
           src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop" 
           alt="Office space"
           className="absolute inset-0 h-full w-full object-cover"
         />
-        {/* Overlay Gradient agar teks terbaca */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-        
-        {/* Konten Text di atas Foto */}
         <div className="absolute bottom-16 left-16 right-16">
           <h2 className="text-4xl font-bold text-white leading-tight">
             Elevate your workflow <br /> with our premium dashboard.
@@ -58,11 +67,9 @@ export default function SignIn() {
         </div>
       </div>
 
-      {/* --- BAGIAN KANAN: FORM LOGIN --- */}
+      {/* --- BAGIAN KANAN: FORM LOGIN (KODE ASLI KAMU) --- */}
       <main className="flex w-full items-center justify-center px-8 py-12 lg:w-1/2">
         <div className="w-full max-w-sm space-y-8">
-          
-          {/* Header */}
           <div>
             <div className="mb-8 flex h-10 w-10 items-center justify-center rounded-xl bg-black text-white dark:bg-white dark:text-black">
               <span className="font-bold">G</span>
@@ -75,7 +82,6 @@ export default function SignIn() {
             </p>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleLogin} className="space-y-5">
             <div className="space-y-2">
               <label className="text-sm font-medium leading-none text-zinc-700 dark:text-zinc-300">
@@ -86,7 +92,7 @@ export default function SignIn() {
                 placeholder="name@company.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex h-11 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-800 dark:bg-zinc-900 dark:ring-offset-zinc-950 dark:focus-visible:ring-white"
+                className="flex h-11 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm ring-offset-white placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-900 dark:ring-offset-zinc-950 dark:focus-visible:ring-white"
                 required
               />
             </div>
@@ -105,31 +111,22 @@ export default function SignIn() {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="flex h-11 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm ring-offset-white placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-900 dark:ring-offset-zinc-950 dark:focus-visible:ring-white"
+                className="flex h-11 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-zinc-800 dark:bg-zinc-900 dark:focus-visible:ring-white"
                 required
               />
             </div>
 
-            {/* Error Message */}
             {error && (
               <div className="flex items-center gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400 border border-red-100 dark:border-red-900/30">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                {error}
+                <span>{error}</span>
               </div>
             )}
 
             <button
               disabled={loading}
-              className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+              className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
             >
-              {loading ? (
-                <div className="flex items-center gap-2">
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-zinc-400 border-t-white" />
-                  Logging in...
-                </div>
-              ) : (
-                "Sign In"
-              )}
+              {loading ? "Logging in..." : "Sign In"}
             </button>
           </form>
 

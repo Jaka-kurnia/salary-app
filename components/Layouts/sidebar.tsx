@@ -22,7 +22,7 @@ export default function SidebarLayout({ children }: { children: React.ReactNode 
       
       {/* SIDEBAR - Desktop */}
       <aside className="hidden md:flex w-[280px] bg-[#004d73] text-white p-5 flex-col gap-1 fixed h-full overflow-y-auto z-50 shadow-2xl">
-        <Link href="/dashboard" className="flex items-center gap-3 mb-8 px-2 py-4">
+        <Link href="/admin/dashboard" className="flex items-center gap-3 mb-8 px-2 py-4">
           <div className="bg-[#00c2cb] p-2 rounded-xl flex items-center justify-center w-10 h-10 shadow-lg">
             <span className="font-bold text-xl text-white">s</span>
           </div>
@@ -31,10 +31,10 @@ export default function SidebarLayout({ children }: { children: React.ReactNode 
 
         {/* Dashboard Link */}
         <MenuLink 
-          href="/dashboard" 
+          href="/admin/dashboard" 
           icon={<LayoutDashboard size={22} />} 
           label="Dashboard" 
-          active={pathname === "/dashboard"} 
+          active={pathname === "/admin/dashboard"} 
         />
 
         {/* Master Accordion */}
@@ -54,19 +54,19 @@ export default function SidebarLayout({ children }: { children: React.ReactNode 
           
           {isOpen && (
             <div className="flex flex-col mt-1 space-y-1">
-              <SubMenuItem href="/master/divisi" icon={<Building2 size={18} />} label="Divisi" active={pathname === "/master/divisi"} />
-              <SubMenuItem href="/master/jabatan" icon={<Briefcase size={18} />} label="Jabatan" active={pathname === "/master/jabatan"} />
-              <SubMenuItem href="/master/karyawan" icon={<Users size={18} />} label="Karyawan" active={pathname === "/master/karyawan"} />
-              <SubMenuItem href="/master/user" icon={<Users size={18} />} label="User" active={pathname === "/master/user"} />
-              <SubMenuItem href="/master/konfigurasi" icon={<GripIcon size={18} />} label="Konfigurasi" active={pathname === "/master/konfigurasi"} />
+              <SubMenuItem href="/admin/master/divisi" icon={<Building2 size={18} />} label="Divisi" active={pathname === "/admin/master/divisi"} />
+              <SubMenuItem href="/admin/master/jabatan" icon={<Briefcase size={18} />} label="Jabatan" active={pathname === "/admin/master/jabatan"} />
+              <SubMenuItem href="/admin/master/karyawan" icon={<Users size={18} />} label="Karyawan" active={pathname === "/admin/master/karyawan"} />
+              <SubMenuItem href="/admin/master/user" icon={<Users size={18} />} label="User" active={pathname === "/admin/master/user"} />
+              <SubMenuItem href="/admin/master/konfigurasi" icon={<GripIcon size={18} />} label="Konfigurasi" active={pathname === "/admin/master/konfigurasi"} />
             </div>
           )}
         </div>
 
         <div className="mt-2 flex flex-col gap-1">
-          <MenuLink href="/presensi" icon={<CalendarCheck size={22} />} label="Presensi" active={pathname === "/presensi"} />
-          <MenuLink href="/cuti" icon={<CalendarDays size={22} />} label="Cuti" active={pathname === "/cuti"} />
-          <MenuLink href="/gaji" icon={<Wallet size={22} />} label="Gaji" active={pathname === "/gaji"} />
+          <MenuLink href="/admin/presensi" icon={<CalendarCheck size={22} />} label="Presensi" active={pathname === "/admin/presensi"} />
+          <MenuLink href="/admin/cuti" icon={<CalendarDays size={22} />} label="Cuti" active={pathname === "/admin/cuti"} />
+          <MenuLink href="/admin/gaji" icon={<Wallet size={22} />} label="Gaji" active={pathname === "/admin/gaji"} />
         </div>
       </aside>
 
