@@ -1,3 +1,5 @@
+"use client";
+
 import NavbarUser from "@/components/LayoutsUser/navbar";
 import SidebarUser from "@/components/LayoutsUser/sidebar";
 import { 
@@ -7,12 +9,32 @@ import {
   ClipboardList, 
   ChevronRight,
   Bell
-} from "lucide-react"; // Pakai Lucide-React semua agar seragam
-import React from "react";
+} from "lucide-react"; 
+import React, { useState, useEffect } from "react";
 
-const page = () => {
+const Page = () => {
+  // State untuk menyimpan tanggal saat ini
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  useEffect(() => {
+    // Update setiap menit (opsional, agar jika lewat tengah malam tanggal berganti)
+    const timer = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 60000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  // Formatter Tanggal Indonesia (Contoh: Jumat, 06 Maret 2026)
+  const formattedDate = currentDate.toLocaleDateString("id-ID", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+
   return (
-    <div className="flex min-h-screen bg-[#F4F7FE]"> {/* Warna bg sedikit lebih cerah/clean */}
+    <div className="flex min-h-screen bg-[#F4F7FE]">
       <SidebarUser />
       
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
@@ -30,13 +52,17 @@ const page = () => {
                   Welcome back, user!
                 </h1>
               </div>
+              
+              {/* Tanggal Dinamis Di Sini */}
               <div className="flex items-center gap-3 bg-white p-2 rounded-2xl shadow-sm border border-zinc-100 px-4 py-2.5">
                 <Calendar size={18} className="text-zinc-400" />
-                <span className="text-sm font-bold text-zinc-600">Friday, 06 March 2026</span>
+                <span className="text-sm font-bold text-zinc-600">
+                  {formattedDate}
+                </span>
               </div>
             </div>
 
-            {/* STATS GRID - Professional Look */}
+            {/* STATS GRID */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <StatCard icon={Clock} title="Kehadiran" value="22/24" status="On Track" color="blue" />
               <StatCard icon={Calendar} title="Sisa Cuti" value="8 Hari" status="Stable" color="emerald" />
@@ -47,7 +73,7 @@ const page = () => {
             {/* LOWER CONTENT */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               
-              {/* Recent History - Clean Table Style */}
+              {/* Recent History */}
               <div className="lg:col-span-2 bg-white p-8 rounded-[2rem] shadow-sm border border-zinc-100">
                 <div className="flex items-center justify-between mb-8 border-b border-zinc-50 pb-5">
                   <h3 className="text-lg font-bold text-[#004d7a]">Recent Activities</h3>
@@ -72,7 +98,7 @@ const page = () => {
                 </div>
               </div>
 
-              {/* Announcement - Elegant Minimalist */}
+              {/* Announcement */}
               <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-zinc-100 flex flex-col relative overflow-hidden">
                 <div className="h-12 w-12 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center mb-6">
                   <Bell size={24} />
@@ -96,7 +122,6 @@ const page = () => {
   );
 };
 
-// Sub-komponen Card dengan Icon Lucide
 const StatCard = ({ icon: Icon, title, value, status, color }: any) => {
   const colors: any = {
     blue: "text-blue-600 bg-blue-50",
@@ -123,4 +148,4 @@ const StatCard = ({ icon: Icon, title, value, status, color }: any) => {
   );
 };
 
-export default page;
+export default Page;

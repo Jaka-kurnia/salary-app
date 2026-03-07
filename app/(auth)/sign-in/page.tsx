@@ -132,7 +132,7 @@ export default function SignIn() {
 
           <footer className="text-center text-sm text-zinc-500">
             Don&apos;t have an account?{" "}
-            <a href="#" className="font-semibold text-zinc-900 hover:underline dark:text-white">
+            <a href="/sign-up" className="font-semibold text-zinc-900 hover:underline dark:text-white">
               Create an account
             </a>
           </footer>
