@@ -136,7 +136,7 @@ const UserPage = () => {
 
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
           {/* --- KIRI: FORM --- */}
-          <aside className="w-full rounded-[2.5rem] bg-white p-8 shadow-sm border border-zinc-100 dark:bg-zinc-900 dark:border-zinc-800 lg:w-[400px] lg:sticky lg:top-24">
+          <aside className="w-full rounded-[2.5rem] bg-white p-8 shadow-sm border border-zinc-100 dark:bg-zinc-900 dark:border-zinc-800 lg:w-100 lg:sticky lg:top-24">
             <div className="mb-8 flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800">
                 {editingId ? <Pencil className="h-5 w-5 text-sky-600" /> : <Plus className="h-5 w-5 text-[#003557]" />}
